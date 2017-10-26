@@ -3,11 +3,12 @@
 // create a particular update_organization by name
 const createUpdateorganization = (z, bundle) => {
   const responsePromise = z.request({
-    method: 'POST',
-    url: 'https://{{platform_url}}/api/v2/organizations/{{id}}',
-    data: JSON.stringify({
-      EXAMPLE: bundle.inputData.EXAMPLE
-    })
+    method: 'PUT',
+    url: `https://${bundle.authData.platform_url}/api/v2/organizations/{{id}}`,
+    params: {
+      id: bundle.inputData.id
+    },
+    data: JSON.stringify(bundle.inputData)
   });
   return responsePromise
     .then(response => JSON.parse(response.content));

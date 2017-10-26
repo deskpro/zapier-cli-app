@@ -4,14 +4,11 @@
 const createAddnotetoticket = (z, bundle) => {
   const responsePromise = z.request({
     method: 'POST',
-    url: 'https://{{platform_url}}/api/v2/tickets/{{id}}/messages',
+    url: `https://${bundle.authData.platform_url}/api/v2/tickets/{{id}}/messages`,
     params: {
-      id: bundle.inputData.id,
-      platform_url: bundle.authData.platform_url
+      id: bundle.inputData.id
     },
-    data: JSON.stringify({
-      is_note: bundle.inputData.is_note
-    })
+    data: JSON.stringify(bundle.inputData)
   });
   return responsePromise
     .then(response => JSON.parse(response.content));

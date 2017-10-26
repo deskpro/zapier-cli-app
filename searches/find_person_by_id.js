@@ -3,7 +3,7 @@
 // find a particular find_person_by_id by name
 const searchFindpersonbyid = (z, bundle) => {
   const responsePromise = z.request({
-    url: 'https://{{platform_url}}/api/v2/people?ids={{ids}}',
+    url: `https://${bundle.authData.platform_url}/api/v2/people?ids={{ids}}`,
     params: {
       EXAMPLE: bundle.inputData.EXAMPLE
     }

@@ -5,9 +5,7 @@ const createCreateperson = (z, bundle) => {
   const responsePromise = z.request({
     method: 'POST',
     url: `https://${bundle.authData.platform_url}/api/v2/people`,
-    data: JSON.stringify({
-      EXAMPLE: bundle.inputData.EXAMPLE
-    })
+    data: JSON.stringify(bundle.inputData)
   });
   return responsePromise
     .then(response => JSON.parse(response.content));

@@ -3,7 +3,7 @@
 // triggers on new_ticket_reply with a certain tag
 const triggerNewticketreply = (z, bundle) => {
   const responsePromise = z.request({
-    url: 'https://{{platform_url}}/api/v2/tickets/1/messages',
+    url: `https://${bundle.authData.platform_url}/api/v2/tickets/1/messages`,
     params: {
       EXAMPLE: bundle.inputData.EXAMPLE
     }

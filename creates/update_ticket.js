@@ -5,9 +5,7 @@ const createUpdateticket = (z, bundle) => {
   const responsePromise = z.request({
     method: 'PUT',
     url: `https://${bundle.authData.platform_url}/api/v2/tickets/{{id}}?follow_location=1`,
-    data: JSON.stringify({
-      EXAMPLE: bundle.inputData.EXAMPLE
-    })
+    data: JSON.stringify(bundle.inputData)
   });
   return responsePromise
     .then(response => JSON.parse(response.content));

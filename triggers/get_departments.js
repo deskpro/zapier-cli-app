@@ -3,7 +3,7 @@
 // triggers on get_departments with a certain tag
 const triggerGetdepartments = (z, bundle) => {
   const responsePromise = z.request({
-    url: 'https://{{platform_url}}/api/v2/ticket_departments',
+    url: `https://${bundle.authData.platform_url}/api/v2/ticket_departments`,
     params: {
       EXAMPLE: bundle.inputData.EXAMPLE
     }

@@ -3,7 +3,7 @@
 // find a particular find_organization by name
 const searchFindorganization = (z, bundle) => {
   const responsePromise = z.request({
-    url: 'https://{{platform_url}}/api/v2/organizations?name={{name}}',
+    url: `https://${bundle.authData.platform_url}/api/v2/organizations?name={{name}}`,
     params: {
       EXAMPLE: bundle.inputData.EXAMPLE
     }

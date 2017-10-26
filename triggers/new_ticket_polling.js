@@ -3,7 +3,7 @@
 // triggers on new_ticket_polling with a certain tag
 const triggerNewticketpolling = (z, bundle) => {
   const responsePromise = z.request({
-    url: 'https://{{platform_url}}/api/v2/tickets?order_by=id&order_dir=desc&filter={{filter}}',
+    url: `https://${bundle.authData.platform_url}/api/v2/tickets?order_by=id&order_dir=desc&filter={{filter}}`,
     params: {
       EXAMPLE: bundle.inputData.EXAMPLE
     }

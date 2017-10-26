@@ -3,7 +3,7 @@
 // triggers on get_ticket_filters with a certain tag
 const triggerGetticketfilters = (z, bundle) => {
   const responsePromise = z.request({
-    url: 'https://{{platform_url}}/api/v2/new/ticket_filters',
+    url: `https://${bundle.authData.platform_url}/api/v2/new/ticket_filters`,
     params: {
       EXAMPLE: bundle.inputData.EXAMPLE
     }
