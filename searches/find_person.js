@@ -38,7 +38,6 @@ module.exports = {
       {
         key: 'primary_email',
         label: 'Email',
-        helpText: '(help text must be at least 10 characters)',
         type: 'string',
         required: true
       }

@@ -28,7 +28,6 @@ module.exports = {
       {
         key: 'id',
         label: 'Id',
-        helpText: '(help text must be at least 10 characters)',
         type: 'string',
         required: true,
         dynamic: 'get_tickets.id.ref',
@@ -44,14 +43,12 @@ module.exports = {
       {
         key: 'format',
         label: 'Format',
-        helpText: '(help text must be at least 10 characters)',
         type: 'string',
         required: false
       },
       {
         key: 'message',
         label: 'Message',
-        helpText: '(help text must be at least 10 characters)',
         type: 'string',
         required: true
       }

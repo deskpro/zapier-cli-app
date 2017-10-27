@@ -27,7 +27,6 @@ module.exports = {
       {
         key: 'ids',
         label: 'Id',
-        helpText: '(help text must be at least 10 characters)',
         type: 'string',
         required: true
       }

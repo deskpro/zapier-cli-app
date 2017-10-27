@@ -25,21 +25,18 @@ module.exports = {
       {
         key: 'name',
         label: 'Name',
-        helpText: '(help text must be at least 10 characters)',
         type: 'string',
         required: true
       },
       {
         key: 'summary',
         label: 'Summary',
-        helpText: '(help text must be at least 10 characters)',
         type: 'string',
         required: false
       },
       {
         key: 'labels',
         label: 'Labels',
-        helpText: '(help text must be at least 10 characters)',
         type: 'string',
         required: false
       }

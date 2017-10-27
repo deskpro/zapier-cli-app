@@ -1,4 +1,4 @@
-replaceCustomFields = require('../functions/replace_custom_fields');
+const replaceCustomFields = require('../functions/replace_custom_fields');
 
 // triggers on new_ticket_polling with a certain tag
 const triggerNewticketpolling = (z, bundle) => {
@@ -41,7 +41,6 @@ module.exports = {
       {
         key: 'filter',
         label: 'Ticket Filter',
-        helpText: '(help text must be at least 10 characters)',
         type: 'integer',
         required: true,
         dynamic: 'get_ticket_filters.id.title'

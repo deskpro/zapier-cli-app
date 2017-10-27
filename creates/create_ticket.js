@@ -26,9 +26,9 @@ module.exports = {
       {
         key: 'department',
         label: 'Department',
-        helpText: '(help text must be at least 10 characters)',
-        type: 'string',
-        required: false
+        type: 'integer',
+        required: false,
+        dynamic: 'get_departments.id.title'
       },
       {
         key: 'agent',
@@ -40,21 +40,18 @@ module.exports = {
       {
         key: 'subject',
         label: 'Subject',
-        helpText: '(help text must be at least 10 characters)',
         type: 'string',
         required: true
       },
       {
         key: 'message__message',
         label: 'Message',
-        helpText: '(help text must be at least 10 characters)',
         type: 'string',
         required: false
       },
       {
         key: 'message__format',
         label: 'Format',
-        helpText: '(help text must be at least 10 characters)',
         type: 'string',
         required: false
       },
@@ -68,21 +65,18 @@ module.exports = {
       {
         key: 'person',
         label: 'Person',
-        helpText: '(help text must be at least 10 characters)',
         type: 'string',
         required: true
       },
       {
         key: 'status',
         label: 'Status',
-        helpText: '(help text must be at least 10 characters)',
         type: 'string',
         required: false
       },
       {
         key: 'labels',
         label: 'Labels',
-        helpText: '(help text must be at least 10 characters)',
         type: 'string',
         required: false
       }

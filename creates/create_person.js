@@ -1,14 +1,32 @@
-// "Create" stub created by 'zapier convert'. This is just a stub - you will need to edit!
+const parseError = require('../functions/parse_error');
+const replaceImgSize = require('../functions/replace_img_size');
 
 // create a particular create_person by name
 const createCreateperson = (z, bundle) => {
   const responsePromise = z.request({
     method: 'POST',
     url: `https://${bundle.authData.platform_url}/api/v2/people`,
-    data: JSON.stringify(bundle.inputData)
+    body: JSON.stringify(bundle.inputData),
+    headers: {
+      'content-type': 'application/json'
+    }
   });
   return responsePromise
-    .then(response => z.JSON.parse(response.content).data);
+    .then(response => {
+      if (response.status === 400) {
+        parseError(response);
+      }
+      const content = z.JSON.parse(response.content);
+      if (content.data.length) {
+        content.data.forEach(function(element) {
+          if (element.avatar) {
+            element.avatar.url_pattern = replaceImgSize(element.avatar.url_pattern);
+            element.avatar.default_url_pattern = replaceImgSize(element.avatar.default_url_pattern);
+          }
+        });
+      }
+      return content.data;
+    });
 };
 
 module.exports = {
@@ -25,7 +43,6 @@ module.exports = {
       {
         key: 'primary_email',
         label: 'Email Address',
-        helpText: '(help text must be at least 10 characters)',
         type: 'string',
         required: true
       },
@@ -39,7 +56,6 @@ module.exports = {
       {
         key: 'title_prefix',
         label: 'Title',
-        helpText: '(help text must be at least 10 characters)',
         type: 'string',
         required: false
       },
@@ -54,21 +70,18 @@ module.exports = {
       {
         key: 'first_name',
         label: 'First Name',
-        helpText: '(help text must be at least 10 characters)',
         type: 'string',
         required: false
       },
       {
         key: 'last_name',
         label: 'Last Name',
-        helpText: '(help text must be at least 10 characters)',
         type: 'string',
         required: false
       },
       {
         key: 'organization',
         label: 'Organization',
-        helpText: '(help text must be at least 10 characters)',
         type: 'string',
         required: false,
         dynamic: 'get_organizations.id.name',
@@ -77,7 +90,6 @@ module.exports = {
       {
         key: 'labels',
         label: 'Labels',
-        helpText: '(help text must be at least 10 characters)',
         type: 'string',
         required: false
       }

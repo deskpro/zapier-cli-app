@@ -25,49 +25,42 @@ module.exports = {
       {
         key: 'id',
         label: 'Id',
-        helpText: '(help text must be at least 10 characters)',
         type: 'string',
         required: true
       },
       {
         key: 'department',
         label: 'Department',
-        helpText: '(help text must be at least 10 characters)',
         type: 'string',
         required: false
       },
       {
         key: 'subject',
         label: 'Subject',
-        helpText: '(help text must be at least 10 characters)',
         type: 'string',
         required: false
       },
       {
         key: 'message__format',
         label: 'Format',
-        helpText: '(help text must be at least 10 characters)',
         type: 'string',
         required: false
       },
       {
         key: 'person',
         label: 'Person',
-        helpText: '(help text must be at least 10 characters)',
         type: 'string',
         required: false
       },
       {
         key: 'status',
         label: 'Status',
-        helpText: '(help text must be at least 10 characters)',
         type: 'string',
         required: false
       },
       {
         key: 'labels',
         label: 'Labels',
-        helpText: '(help text must be at least 10 characters)',
         type: 'string',
         required: false
       }
