@@ -1,15 +1,26 @@
-// Search stub created by 'zapier convert'. This is just a stub - you will need to edit!
+const replaceImgSize = require('../functions/replace_img_size');
 
 // find a particular find_person by name
 const searchFindperson = (z, bundle) => {
   const responsePromise = z.request({
-    url: `https://${bundle.authData.platform_url}/api/v2/people?primary_email={{primary_email}}`,
+    url: `https://${bundle.authData.platform_url}/api/v2/people`,
     params: {
-      EXAMPLE: bundle.inputData.EXAMPLE
+      primary_email: bundle.inputData.primary_email
     }
   });
   return responsePromise
-    .then(response => JSON.parse(response.content));
+    .then(response => {
+      const content = z.JSON.parse(response.content);
+      if (content.data.length) {
+        content.data.forEach(function(element) {
+          if (element.avatar) {
+            element.avatar.url_pattern = replaceImgSize(element.avatar.url_pattern);
+            element.avatar.default_url_pattern = replaceImgSize(element.avatar.default_url_pattern);
+          }
+        });
+      }
+      return content.data;
+    });
 };
 
 module.exports = {

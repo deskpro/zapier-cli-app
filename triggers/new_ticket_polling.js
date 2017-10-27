@@ -1,15 +1,30 @@
-// Trigger stub created by 'zapier convert'. This is just a stub - you will need to edit!
+replaceCustomFields = require('../functions/replace_custom_fields');
 
 // triggers on new_ticket_polling with a certain tag
 const triggerNewticketpolling = (z, bundle) => {
   const responsePromise = z.request({
-    url: `https://${bundle.authData.platform_url}/api/v2/tickets?order_by=id&order_dir=desc&filter={{filter}}`,
+    url: `https://${bundle.authData.platform_url}/api/v2/tickets`,
     params: {
-      EXAMPLE: bundle.inputData.EXAMPLE
+      order_by: 'id',
+      order_dir: 'desc',
+      filter: bundle.inputData.filter
     }
   });
-  return responsePromise
-    .then(response => JSON.parse(response.content));
+  const getTicketCustomFields = z.request({
+    url: `https://${bundle.authData.platform_url}/api/v2/ticket_custom_fields`
+  });
+  return Promise.all([responsePromise, getTicketCustomFields])
+    .then(responses => {
+      const tickets = z.JSON.parse(responses[0].content).data;
+      const customFields = z.JSON.parse(responses[1].content).data;
+      return tickets.map(ticket => {
+        delete ticket.cc;
+        delete ticket.children;
+        delete ticket.product;
+        delete ticket.problems;
+        return replaceCustomFields(ticket, customFields);
+      });
+    });
 };
 
 module.exports = {
@@ -28,7 +43,8 @@ module.exports = {
         label: 'Ticket Filter',
         helpText: '(help text must be at least 10 characters)',
         type: 'integer',
-        required: true
+        required: true,
+        dynamic: 'get_ticket_filters.id.title'
       }
     ],
     outputFields: [

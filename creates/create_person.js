@@ -8,7 +8,7 @@ const createCreateperson = (z, bundle) => {
     data: JSON.stringify(bundle.inputData)
   });
   return responsePromise
-    .then(response => JSON.parse(response.content));
+    .then(response => z.JSON.parse(response.content).data);
 };
 
 module.exports = {
@@ -70,7 +70,9 @@ module.exports = {
         label: 'Organization',
         helpText: '(help text must be at least 10 characters)',
         type: 'string',
-        required: false
+        required: false,
+        dynamic: 'get_organizations.id.name',
+        search: 'find_organization.id'
       },
       {
         key: 'labels',

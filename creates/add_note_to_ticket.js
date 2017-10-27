@@ -11,7 +11,7 @@ const createAddnotetoticket = (z, bundle) => {
     data: JSON.stringify(bundle.inputData)
   });
   return responsePromise
-    .then(response => JSON.parse(response.content));
+    .then(response => z.JSON.parse(response.content).data);
 };
 
 module.exports = {
@@ -30,7 +30,9 @@ module.exports = {
         label: 'Id',
         helpText: '(help text must be at least 10 characters)',
         type: 'string',
-        required: true
+        required: true,
+        dynamic: 'get_tickets.id.ref',
+        search: 'find_ticket.id'
       },
       {
         key: 'is_note',

@@ -3,13 +3,10 @@
 // triggers on get_organizations with a certain tag
 const triggerGetorganizations = (z, bundle) => {
   const responsePromise = z.request({
-    url: `https://${bundle.authData.platform_url}/api/v2/organizations`,
-    params: {
-      EXAMPLE: bundle.inputData.EXAMPLE
-    }
+    url: `https://${bundle.authData.platform_url}/api/v2/organizations`
   });
   return responsePromise
-    .then(response => JSON.parse(response.content));
+    .then(response => z.JSON.parse(response.content).data);
 };
 
 module.exports = {
@@ -24,7 +21,6 @@ module.exports = {
 
   operation: {
     inputFields: [
-
     ],
     outputFields: [
       {

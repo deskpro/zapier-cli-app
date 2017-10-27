@@ -1,6 +1,6 @@
 const testAuth = (z , bundle) => {
   const responsePromise = z.request({
-    url: `http://${bundle.authData.platform_url}/api/v2/apps/zapier/ping`
+    url: `https://${bundle.authData.platform_url}/api/v2/apps/zapier/ping`
   });
   return responsePromise
     .then(response => JSON.parse(response.content));

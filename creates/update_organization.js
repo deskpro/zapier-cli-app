@@ -11,7 +11,7 @@ const createUpdateorganization = (z, bundle) => {
     data: JSON.stringify(bundle.inputData)
   });
   return responsePromise
-    .then(response => JSON.parse(response.content));
+    .then(response => z.JSON.parse(response.content).data);
 };
 
 module.exports = {

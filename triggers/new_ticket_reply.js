@@ -3,10 +3,7 @@
 // triggers on new_ticket_reply with a certain tag
 const triggerNewticketreply = (z, bundle) => {
   const responsePromise = z.request({
-    url: `https://${bundle.authData.platform_url}/api/v2/tickets/1/messages`,
-    params: {
-      EXAMPLE: bundle.inputData.EXAMPLE
-    }
+    url: `https://${bundle.authData.platform_url}/api/v2/tickets/${bundle.inputData.ticket_id}/messages`
   });
   return responsePromise
     .then(response => JSON.parse(response.content));
@@ -23,7 +20,14 @@ module.exports = {
 
   operation: {
     inputFields: [
-
+      {
+        key: 'ticket_id',
+        label: 'Id',
+        type: 'integer',
+        required: true,
+        dynamic: 'get_tickets.id.ref',
+        search: 'find_ticket.id'
+      }
     ],
     outputFields: [
       {

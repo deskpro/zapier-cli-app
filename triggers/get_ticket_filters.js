@@ -4,12 +4,10 @@
 const triggerGetticketfilters = (z, bundle) => {
   const responsePromise = z.request({
     url: `https://${bundle.authData.platform_url}/api/v2/new/ticket_filters`,
-    params: {
-      EXAMPLE: bundle.inputData.EXAMPLE
-    }
+    params: {}
   });
   return responsePromise
-    .then(response => JSON.parse(response.content));
+    .then(response => z.JSON.parse(response.content).data);
 };
 
 module.exports = {

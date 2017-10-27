@@ -1,13 +1,31 @@
 // find a particular find_ticket by name
 const searchFindticket = (z, bundle) => {
   const responsePromise = z.request({
-    url: `https://{{bundle.authData.platform_url}}/api/v2/search?q={{query}}&types=ticket`,
+    url: `https://${bundle.authData.platform_url}/api/v2/search`,
     params: {
-      query: bundle.inputData.query
+      q: bundle.inputData.query,
+      types: 'ticket'
     }
   });
-  return responsePromise
-    .then(response => JSON.parse(response.content));
+  const getTicketCustomFields = z.request({
+    url: `https://${bundle.authData.platform_url}/api/v2/ticket_custom_fields`
+  });
+  return Promise.all([responsePromise, getTicketCustomFields])
+    .then(responses => {
+      const data = z.JSON.parse(responses[0].content).data;
+      const customFields = z.JSON.parse(responses[1].content).data;
+      if (data) {
+        const tickets = data.grouped_results.find(result => result.type === 'ticket');
+        return tickets.results.map(ticket => {
+          delete ticket.cc;
+          delete ticket.children;
+          delete ticket.product;
+          delete ticket.problems;
+          return replaceCustomFields(ticket, customFields);
+        });
+      }
+      return [];
+    });
 };
 
 module.exports = {

@@ -24,6 +24,7 @@ const AddnotetoticketCreate = require('./creates/add_note_to_ticket');
 const CreateorganizationCreate = require('./creates/create_organization');
 const UpdateorganizationCreate = require('./creates/update_organization');
 const UpdateticketCreate = require('./creates/update_ticket');
+const getTicketCustomFields = require('./hydrators/get_ticket_custom_fields');
 
 const addApiKeyToHeader = (request, z, bundle) => {
   request.headers.Authorization = `key ${bundle.authData.apiKey}`;
