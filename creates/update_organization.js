@@ -4,11 +4,8 @@
 const createUpdateorganization = (z, bundle) => {
   const responsePromise = z.request({
     method: 'PUT',
-    url: `https://${bundle.authData.platform_url}/api/v2/organizations/{{id}}`,
-    params: {
-      id: bundle.inputData.id
-    },
-    data: JSON.stringify(bundle.inputData)
+    url: `https://${bundle.authData.platform_url}/api/v2/organizations/${bundle.inputData.id}`,
+    body: JSON.stringify(bundle.inputData)
   });
   return responsePromise
     .then(response => z.JSON.parse(response.content).data);
@@ -29,7 +26,7 @@ module.exports = {
       {
         key: 'id',
         label: 'Id',
-        type: 'string',
+        type: 'integer',
         required: true
       },
       {

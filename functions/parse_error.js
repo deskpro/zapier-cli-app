@@ -4,6 +4,8 @@ const parseError = (response) => {
     if (content.errors && content.errors.fields) {
       const field = Object.keys(content.errors.fields)[0];
       throw new Error(field + ': ' + content.errors.fields[field].errors[0].message);
+    } else if (content.errors.errors) {
+      throw new Error(content.errors.errors[0].message);
     }
   }
 };

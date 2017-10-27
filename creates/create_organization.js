@@ -5,7 +5,7 @@ const createCreateorganization = (z, bundle) => {
   const responsePromise = z.request({
     method: 'POST',
     url: `https://${bundle.authData.platform_url}/api/v2/organizations`,
-    data: JSON.stringify(bundle.inputData)
+    body: JSON.stringify(bundle.inputData)
   });
   return responsePromise
     .then(response => z.JSON.parse(response.content).data);

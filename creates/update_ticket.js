@@ -1,11 +1,14 @@
-// "Create" stub created by 'zapier convert'. This is just a stub - you will need to edit!
+const convertBodyData = require('../functions/convert_body_data');
 
 // create a particular update_ticket by name
 const createUpdateticket = (z, bundle) => {
   const responsePromise = z.request({
     method: 'PUT',
-    url: `https://${bundle.authData.platform_url}/api/v2/tickets/{{id}}?follow_location=1`,
-    data: JSON.stringify(bundle.inputData)
+    url: `https://${bundle.authData.platform_url}/api/v2/tickets/${bundle.inputData.id}`,
+    params: {
+      follow_location: 1
+    },
+    body: JSON.stringify(convertBodyData(bundle.inputData))
   });
   return responsePromise
     .then(response => z.JSON.parse(response.content).data);
@@ -25,14 +28,17 @@ module.exports = {
       {
         key: 'id',
         label: 'Id',
-        type: 'string',
-        required: true
+        type: 'integer',
+        required: true,
+        dynamic: 'get_tickets.id.ref',
+        search: 'find_ticket.id'
       },
       {
         key: 'department',
         label: 'Department',
-        type: 'string',
-        required: false
+        type: 'integer',
+        required: false,
+        dynamic: 'get_departments.id.title'
       },
       {
         key: 'subject',
@@ -41,22 +47,19 @@ module.exports = {
         required: false
       },
       {
-        key: 'message__format',
-        label: 'Format',
-        type: 'string',
-        required: false
-      },
-      {
         key: 'person',
         label: 'Person',
         type: 'string',
-        required: false
+        required: false,
+        dynamic: 'get_persons.id.name',
+        search: 'find_person.id'
       },
       {
         key: 'status',
         label: 'Status',
         type: 'string',
-        required: false
+        required: false,
+        dynamic: 'get_ticket_statuses.id.label'
       },
       {
         key: 'labels',
@@ -81,14 +84,6 @@ module.exports = {
       },
       {
         key: 'category',
-        type: 'string'
-      },
-      {
-        key: 'cc',
-        type: 'string'
-      },
-      {
-        key: 'children',
         type: 'string'
       },
       {
@@ -231,14 +226,6 @@ module.exports = {
         type: 'string'
       },
       {
-        key: 'problems',
-        type: 'string'
-      },
-      {
-        key: 'product',
-        type: 'string'
-      },
-      {
         key: 'properties',
         type: 'string'
       },
@@ -248,10 +235,6 @@ module.exports = {
       },
       {
         key: 'sent_to_address',
-        type: 'string'
-      },
-      {
-        key: 'siblings',
         type: 'string'
       },
       {
@@ -299,6 +282,44 @@ module.exports = {
         type: 'string'
       }
     ],
+
+    sample: {
+      "id": 1,
+      "ref": "ABCD-EFGH-IJKL",
+      "auth": 0,
+      "department": 1,
+      "person": 1,
+      "person_email": "email@example.com",
+      "agent": 1,
+      "organization": 1,
+      "sent_to_address": [],
+      "email_account_address": "",
+      "creation_system": "web.agent.portal",
+      "creation_system_option": "",
+      "ticket_hash": "none",
+      "status": "awaiting_user",
+      "is_hold": false,
+      "labels": [],
+      "urgency": 1,
+      "date_created": "2017-01-19T16:56:23+0000",
+      "date_first_agent_assign": "2017-01-19T16:56:23+0000",
+      "date_first_agent_reply": "2017-01-19T16:56:24+0000",
+      "date_last_agent_reply": "2017-01-19T16:56:24+0000",
+      "date_agent_waiting": "2017-01-19T16:56:23+0000",
+      "date_status": "2017-01-19T16:56:24+0000",
+      "total_user_waiting": 0,
+      "total_to_first_reply": 1,
+      "has_attachments": false,
+      "subject": "Test ticket",
+      "original_subject": "Test ticket",
+      "count_agent_replies": 1,
+      "waiting_times": [],
+      "ticket_slas": [],
+      "fields": [],
+      "contextual_fields": [],
+      "star": {},
+      "count_user_replies": 0,
+    },
 
     perform: createUpdateticket
   }

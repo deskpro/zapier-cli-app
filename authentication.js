@@ -1,10 +1,4 @@
-const testAuth = (z , bundle) => {
-  const responsePromise = z.request({
-    url: `https://${bundle.authData.platform_url}/api/v2/apps/zapier/ping`
-  });
-  return responsePromise
-    .then(response => JSON.parse(response.content));
-};
+const TesttriggerTrigger = require('./triggers/test_trigger');
 
 module.exports = {
   type: 'custom',
@@ -32,5 +26,5 @@ module.exports = {
   connectionLabel: '{{bundle.authData.platform_url}}',
   // The test method allows Zapier to verify that the credentials a user provides are valid. We'll execute this
   // method whenver a user connects their account for the first time.
-  test: testAuth
+  test: TesttriggerTrigger.operation.perform
 };

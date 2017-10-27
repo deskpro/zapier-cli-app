@@ -70,14 +70,6 @@ module.exports = {
         type: 'string'
       },
       {
-        key: 'data[]cc',
-        type: 'string'
-      },
-      {
-        key: 'data[]children',
-        type: 'string'
-      },
-      {
         key: 'data[]count_agent_replies',
         type: 'string'
       },
@@ -221,14 +213,6 @@ module.exports = {
         type: 'string'
       },
       {
-        key: 'data[]problems',
-        type: 'string'
-      },
-      {
-        key: 'data[]product',
-        type: 'string'
-      },
-      {
         key: 'data[]properties',
         type: 'string'
       },
@@ -314,6 +298,44 @@ module.exports = {
         type: 'string'
       }
     ],
+
+    sample: {
+      "id": 1,
+      "ref": "ABCD-EFGH-IJKL",
+      "auth": 0,
+      "department": 1,
+      "person": 1,
+      "person_email": "email@example.com",
+      "agent": 1,
+      "organization": 1,
+      "sent_to_address": [],
+      "email_account_address": "",
+      "creation_system": "web.agent.portal",
+      "creation_system_option": "",
+      "ticket_hash": "none",
+      "status": "awaiting_user",
+      "is_hold": false,
+      "labels": [],
+      "urgency": 1,
+      "date_created": "2017-01-19T16:56:23+0000",
+      "date_first_agent_assign": "2017-01-19T16:56:23+0000",
+      "date_first_agent_reply": "2017-01-19T16:56:24+0000",
+      "date_last_agent_reply": "2017-01-19T16:56:24+0000",
+      "date_agent_waiting": "2017-01-19T16:56:23+0000",
+      "date_status": "2017-01-19T16:56:24+0000",
+      "total_user_waiting": 0,
+      "total_to_first_reply": 1,
+      "has_attachments": false,
+      "subject": "Test ticket",
+      "original_subject": "Test ticket",
+      "count_agent_replies": 1,
+      "waiting_times": [],
+      "ticket_slas": [],
+      "fields": [],
+      "contextual_fields": [],
+      "star": {},
+      "count_user_replies": 0,
+    },
 
     perform: triggerNewticketpolling
   }

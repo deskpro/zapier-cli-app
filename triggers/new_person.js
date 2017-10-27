@@ -5,7 +5,8 @@ const triggerNewperson = (z, bundle) => {
   const responsePromise = z.request({
     url: `https://${bundle.authData.platform_url}/api/v2/people`,
     params: {
-      EXAMPLE: bundle.inputData.EXAMPLE
+      order_by: 'id',
+      order_dir: 'desc',
     }
   });
   return responsePromise

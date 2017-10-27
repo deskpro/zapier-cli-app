@@ -1,13 +1,23 @@
-// Trigger stub created by 'zapier convert'. This is just a stub - you will need to edit!
+const replaceImgSize = require('../functions/replace_img_size');
 
 // triggers on get_persons with a certain tag
 const triggerGetpersons = (z, bundle) => {
   const responsePromise = z.request({
-    url: `https://${bundle.authData.platform_url}/api/v2/people`,
-    params: {}
+    url: `https://${bundle.authData.platform_url}/api/v2/people`
   });
   return responsePromise
-    .then(response => JSON.parse(response.content));
+    .then(response => {
+      const content = z.JSON.parse(response.content);
+      if (content.data.length) {
+        content.data.forEach(function(element) {
+          if (element.avatar) {
+            element.avatar.url_pattern = replaceImgSize(element.avatar.url_pattern);
+            element.avatar.default_url_pattern = replaceImgSize(element.avatar.default_url_pattern);
+          }
+        });
+      }
+      return content.data;
+    });
 };
 
 module.exports = {

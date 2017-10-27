@@ -25,20 +25,4 @@ describe('Authentication', () => {
       })
       .catch(done);
   });
-
-  it('should fail on wrong url', (done) => {
-    const bundle = {
-      authData: {
-        platform_url: 'blablabla.deskpro.com',
-        apiKey: '123456abcd'
-      },
-    };
-
-    appTester(App.authentication.test, bundle)
-      .then((result) => {
-        result.should.have.property('errors');
-        done();
-      })
-      .catch(done);
-  });
 });

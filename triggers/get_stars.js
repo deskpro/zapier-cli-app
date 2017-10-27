@@ -3,11 +3,10 @@
 // triggers on get_stars with a certain tag
 const triggerGetstars = (z, bundle) => {
   const responsePromise = z.request({
-    url: `https://${bundle.authData.platform_url}/api/v2/ticket_stars`,
-    params: {}
+    url: `https://${bundle.authData.platform_url}/api/v2/ticket_stars`
   });
   return responsePromise
-    .then(response => JSON.parse(response.content));
+    .then(response => z.JSON.parse(response.content).data);
 };
 
 module.exports = {

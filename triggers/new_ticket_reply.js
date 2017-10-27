@@ -3,10 +3,47 @@
 // triggers on new_ticket_reply with a certain tag
 const triggerNewticketreply = (z, bundle) => {
   const responsePromise = z.request({
-    url: `https://${bundle.authData.platform_url}/api/v2/tickets/${bundle.inputData.ticket_id}/messages`
+    url: `https://${bundle.authData.platform_url}/api/v2/tickets/1/messages`
   });
   return responsePromise
-    .then(response => JSON.parse(response.content));
+    .then(response => z.JSON.parse(response.content).data);
+};
+
+const getTicketReply = (z, bundle) => {
+  const ticketReply = bundle.cleanedRequest;
+
+  return [ticketReply];
+};
+
+const subscribeHook = (z, bundle) => {
+  const data = {
+    target_url: bundle.targetUrl,
+    event: 'new_ticket_reply'
+  };
+
+  // You may return a promise or a normal data structure from any perform method.
+  return z.request({
+    url: `https://${bundle.authData.platform_url}/api/v2/apps/zapier/hooks`,
+    method: 'POST',
+    body: JSON.stringify(data)
+  })
+    .then((response) => {
+      return z.JSON.parse(response.content).data;
+    });
+};
+
+const unsubscribeHook = (z, bundle) => {
+  // bundle.subscribeData contains the parsed response JSON from the subscribe
+  // request made initially.
+  const hookId = bundle.subscribeData.id;
+
+
+  // You may return a promise or a normal data structure from any perform method.
+  return z.request({
+    url: `https://${bundle.authData.platform_url}/api/v2/apps/zapier/hooks/${hookId}`,
+    method: 'DELETE',
+  })
+    .then((response) => z.JSON.parse(response.content));
 };
 
 module.exports = {
@@ -19,16 +56,15 @@ module.exports = {
   },
 
   operation: {
-    inputFields: [
-      {
-        key: 'ticket_id',
-        label: 'Id',
-        type: 'integer',
-        required: true,
-        dynamic: 'get_tickets.id.ref',
-        search: 'find_ticket.id'
-      }
-    ],
+    type: 'hook',
+
+    performSubscribe: subscribeHook,
+    performUnsubscribe: unsubscribeHook,
+
+    perform: getTicketReply,
+    performList: triggerNewticketreply,
+
+    inputFields: [],
     outputFields: [
       {
         key: 'attachments',
@@ -118,6 +154,30 @@ module.exports = {
         type: 'string'
       }
     ],
+
+    sample: {
+      "message_raw": null,
+      "message_full": null,
+      "email_source": null,
+      "attachments": [],
+      "lang_code": null,
+      "geo_country": "GB",
+      "show_full_hint": false,
+      "message": "Ticket Message",
+      "hostname": "example.net",
+      "visitor_id": null,
+      "email": "",
+      "person": 1,
+      "is_agent_note": 0,
+      "primary_translation": null,
+      "creation_system": "web",
+      "date_created": "2016-12-04T22:23:21+0000",
+      "message_hash": "752b9e5046e05668241705730e645bce664cb1a8",
+      "ticket": 1,
+      "attributes": [],
+      "ip_address": "192.168.0.1",
+      "id": 1
+    },
 
     perform: triggerNewticketreply
   }

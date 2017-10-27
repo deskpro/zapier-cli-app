@@ -1,14 +1,32 @@
-// "Create" stub created by 'zapier convert'. This is just a stub - you will need to edit!
+const parseError = require('../functions/parse_error');
+const replaceCustomFields = require('../functions/replace_custom_fields');
+const convertBodyData = require('../functions/convert_body_data');
 
 // create a particular create_ticket by name
 const createCreateticket = (z, bundle) => {
   const responsePromise = z.request({
     method: 'POST',
     url: `https://${bundle.authData.platform_url}/api/v2/tickets`,
-    data: JSON.stringify(bundle.inputData)
+    body: JSON.stringify(convertBodyData(bundle.inputData))
   });
-  return responsePromise
-    .then(response => z.JSON.parse(response.content).data);
+  const getTicketCustomFields = z.request({
+    url: `https://${bundle.authData.platform_url}/api/v2/ticket_custom_fields`
+  });
+  return Promise.all([responsePromise, getTicketCustomFields])
+    .then(responses => {
+      if (responses[0].status === 400) {
+        parseError(responses[0]);
+      }
+      console.log(responses);
+      const ticket = z.JSON.parse(responses[0].content).data;
+      console.log(ticket);
+      const customFields = z.JSON.parse(responses[1].content).data;
+      delete ticket.cc;
+      delete ticket.children;
+      delete ticket.product;
+      delete ticket.problems;
+      return replaceCustomFields(ticket, customFields);
+    });
 };
 
 module.exports = {
@@ -46,33 +64,39 @@ module.exports = {
       {
         key: 'message__message',
         label: 'Message',
-        type: 'string',
+        type: 'text',
         required: false
       },
       {
         key: 'message__format',
         label: 'Format',
         type: 'string',
-        required: false
+        required: false,
+        choices: {text: "Text", html: "HTML"}
       },
       {
         key: 'message__person',
         label: 'Message Author',
         helpText: 'Optional, can be an Id or email address.',
         type: 'string',
-        required: false
+        required: false,
+        dynamic: 'get_persons.id.name',
+        search: 'find_person.id'
       },
       {
         key: 'person',
         label: 'Person',
         type: 'string',
-        required: true
+        required: true,
+        dynamic: 'get_persons.id.name',
+        search: 'find_person.id'
       },
       {
         key: 'status',
         label: 'Status',
         type: 'string',
-        required: false
+        required: false,
+        dynamic: 'get_ticket_statuses.id.label'
       },
       {
         key: 'labels',
@@ -96,14 +120,6 @@ module.exports = {
       },
       {
         key: 'category',
-        type: 'string'
-      },
-      {
-        key: 'cc',
-        type: 'string'
-      },
-      {
-        key: 'children',
         type: 'string'
       },
       {
@@ -244,14 +260,6 @@ module.exports = {
         type: 'string'
       },
       {
-        key: 'problems',
-        type: 'string'
-      },
-      {
-        key: 'product',
-        type: 'string'
-      },
-      {
         key: 'properties',
         type: 'string'
       },
@@ -313,6 +321,44 @@ module.exports = {
         type: 'string'
       }
     ],
+
+    sample: {
+      "id": 1,
+      "ref": "ABCD-EFGH-IJKL",
+      "auth": 0,
+      "department": 1,
+      "person": 1,
+      "person_email": "email@example.com",
+      "agent": 1,
+      "organization": 1,
+      "sent_to_address": [],
+      "email_account_address": "",
+      "creation_system": "web.agent.portal",
+      "creation_system_option": "",
+      "ticket_hash": "none",
+      "status": "awaiting_user",
+      "is_hold": false,
+      "labels": [],
+      "urgency": 1,
+      "date_created": "2017-01-19T16:56:23+0000",
+      "date_first_agent_assign": "2017-01-19T16:56:23+0000",
+      "date_first_agent_reply": "2017-01-19T16:56:24+0000",
+      "date_last_agent_reply": "2017-01-19T16:56:24+0000",
+      "date_agent_waiting": "2017-01-19T16:56:23+0000",
+      "date_status": "2017-01-19T16:56:24+0000",
+      "total_user_waiting": 0,
+      "total_to_first_reply": 1,
+      "has_attachments": false,
+      "subject": "Test ticket",
+      "original_subject": "Test ticket",
+      "count_agent_replies": 1,
+      "waiting_times": [],
+      "ticket_slas": [],
+      "fields": [],
+      "contextual_fields": [],
+      "star": {},
+      "count_user_replies": 0,
+    },
 
     perform: createCreateticket
   }

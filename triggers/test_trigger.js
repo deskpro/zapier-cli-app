@@ -3,16 +3,12 @@
 // triggers on test_trigger with a certain tag
 const triggerTesttrigger = (z, bundle) => {
   const responsePromise = z.request({
-    url: `https://${bundle.authData.platform_url}/api/v2/apps/zapier/ping`,
-    params: {
-      platform_url: bundle.authData.platform_url
-    }
+    url: `https://${bundle.authData.platform_url}/api/v2/apps/zapier/ping`
   });
   return responsePromise
     .then(response => {
-      JSON.parse(response.content)
-      if (response.status_code === 200 && response.content !== "[]") {
-        throw new ErrorException('Invalid url.');
+      if (response.status !== 200 || (response.status === 200 && response.content !== "[]")) {
+        throw new Error('Invalid url.');
       }
       return z.JSON.parse(response.content);
     });

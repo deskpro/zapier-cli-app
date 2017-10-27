@@ -1,16 +1,48 @@
-// Trigger stub created by 'zapier convert'. This is just a stub - you will need to edit!
+const GetticketsTrigger = require('./get_tickets');
 
-// triggers on new_ticket_webhook with a certain tag
-const triggerNewticketwebhook = (z, bundle) => {
-  const responsePromise = z.request({
-    url: `https://${bundle.authData.platform_url}/api/v2/tickets`,
-    params: {
-      EXAMPLE: bundle.inputData.EXAMPLE
-    }
-  });
-  return responsePromise
-    .then(response => JSON.parse(response.content));
+const getTicket = (z, bundle) => {
+  const ticket = bundle.cleanedRequest;
+
+  delete ticket.cc;
+  delete ticket.children;
+  delete ticket.siblings;
+  delete ticket.product;
+  delete ticket.problems;
+
+  return [ticket];
 };
+
+const subscribeHook = (z, bundle) => {
+  const data = {
+    target_url: bundle.targetUrl,
+    event: 'ticket_created'
+  };
+
+  // You may return a promise or a normal data structure from any perform method.
+  return z.request({
+    url: `https://${bundle.authData.platform_url}/api/v2/apps/zapier/hooks`,
+    method: 'POST',
+    body: JSON.stringify(data)
+  })
+    .then((response) => {
+      return z.JSON.parse(response.content).data;
+    });
+};
+
+const unsubscribeHook = (z, bundle) => {
+  // bundle.subscribeData contains the parsed response JSON from the subscribe
+  // request made initially.
+  const hookId = bundle.subscribeData.id;
+
+
+  // You may return a promise or a normal data structure from any perform method.
+  return z.request({
+    url: `https://${bundle.authData.platform_url}/api/v2/apps/zapier/hooks/${hookId}`,
+    method: 'DELETE',
+  })
+    .then((response) => z.JSON.parse(response.content));
+};
+
 
 module.exports = {
   key: 'new_ticket_webhook',
@@ -23,6 +55,14 @@ module.exports = {
   },
 
   operation: {
+    type: 'hook',
+
+    performSubscribe: subscribeHook,
+    performUnsubscribe: unsubscribeHook,
+
+    perform: getTicket,
+    performList: GetticketsTrigger.operation.perform,
+
     inputFields: [
 
     ],
@@ -188,6 +228,42 @@ module.exports = {
       }
     ],
 
-    perform: triggerNewticketwebhook
+    sample: {
+      "id": 1,
+      "ref": "ABCD-EFGH-IJKL",
+      "auth": 0,
+      "department": 1,
+      "person": 1,
+      "person_email": "email@example.com",
+      "agent": 1,
+      "organization": 1,
+      "sent_to_address": [],
+      "email_account_address": "",
+      "creation_system": "web.agent.portal",
+      "creation_system_option": "",
+      "ticket_hash": "none",
+      "status": "awaiting_user",
+      "is_hold": false,
+      "labels": [],
+      "urgency": 1,
+      "date_created": "2017-01-19T16:56:23+0000",
+      "date_first_agent_assign": "2017-01-19T16:56:23+0000",
+      "date_first_agent_reply": "2017-01-19T16:56:24+0000",
+      "date_last_agent_reply": "2017-01-19T16:56:24+0000",
+      "date_agent_waiting": "2017-01-19T16:56:23+0000",
+      "date_status": "2017-01-19T16:56:24+0000",
+      "total_user_waiting": 0,
+      "total_to_first_reply": 1,
+      "has_attachments": false,
+      "subject": "Test ticket",
+      "original_subject": "Test ticket",
+      "count_agent_replies": 1,
+      "waiting_times": [],
+      "ticket_slas": [],
+      "fields": [],
+      "contextual_fields": [],
+      "star": {},
+      "count_user_replies": 0,
+    }
   }
 };
