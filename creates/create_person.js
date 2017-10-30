@@ -1,5 +1,6 @@
 const parseError = require('../functions/parse_error');
 const replaceImgSize = require('../functions/replace_img_size');
+const replaceCustomFields = require('../functions/replace_custom_fields');
 
 // create a particular create_person by name
 const createCreateperson = (z, bundle) => {
@@ -11,21 +12,26 @@ const createCreateperson = (z, bundle) => {
       'content-type': 'application/json'
     }
   });
-  return responsePromise
-    .then(response => {
-      if (response.status === 400) {
-        parseError(response);
+  const getPersonCustomFields = z.request({
+    url: `https://${bundle.authData.platform_url}/api/v2/person_custom_fields`
+  });
+  return Promise.all([responsePromise, getPersonCustomFields])
+    .then(responses => {
+      if (responses[0].status === 400) {
+        parseError(responses[0]);
       }
-      const content = z.JSON.parse(response.content);
-      if (content.data.length) {
-        content.data.forEach(function(element) {
-          if (element.avatar) {
-            element.avatar.url_pattern = replaceImgSize(element.avatar.url_pattern);
-            element.avatar.default_url_pattern = replaceImgSize(element.avatar.default_url_pattern);
+      const persons = z.JSON.parse(responses[0].content).data;
+      const customFields = z.JSON.parse(responses[1].content).data;
+      if (persons.length) {
+        return persons.map((person) => {
+          if (person.avatar) {
+            person.avatar.url_pattern = replaceImgSize(person.avatar.url_pattern);
+            person.avatar.default_url_pattern = replaceImgSize(person.avatar.default_url_pattern);
           }
+          return replaceCustomFields(person, customFields);
         });
       }
-      return content.data;
+      return [];
     });
 };
 

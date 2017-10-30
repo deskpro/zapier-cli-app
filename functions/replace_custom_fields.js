@@ -1,27 +1,27 @@
-const replaceCustomFields = (ticket, customFields) => {
+const replaceCustomFields = (object, customFields) => {
   const newFields = {};
-  ticket.fields = Object.keys(ticket.fields).forEach((id) => {
+  object.fields = Object.keys(object.fields).forEach((id) => {
     let title = id;
     const customField = customFields.find(field => field.id === parseInt(id, 10));
     if (customField) {
       title = customField.title;
     }
     let value;
-    if (ticket.fields[id].detail) {
-      if (Array.isArray(ticket.fields[id].value)) {
-        value = ticket.fields[id].value.map(valueId => {
-          return ticket.fields[id].detail[valueId].title;
+    if (object.fields[id].detail) {
+      if (Array.isArray(object.fields[id].value)) {
+        value = object.fields[id].value.map(valueId => {
+          return object.fields[id].detail[valueId].title;
         })
       } else {
-        value = ticket.fields[id].detail[ticket.fields[id].value].title;
+        value = object.fields[id].detail[object.fields[id].value].title;
       }
     } else {
-      value = ticket.fields[id].value;
+      value = object.fields[id].value;
     }
     newFields[title] = value;
   });
-  ticket.fields = newFields;
-  return ticket;
+  object.fields = newFields;
+  return object;
 };
 
 module.exports = replaceCustomFields;

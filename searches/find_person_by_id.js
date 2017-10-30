@@ -1,4 +1,6 @@
-// Search stub created by 'zapier convert'. This is just a stub - you will need to edit!
+const parseError = require('../functions/parse_error');
+const replaceImgSize = require('../functions/replace_img_size');
+const replaceCustomFields = require('../functions/replace_custom_fields');
 
 // find a particular find_person_by_id by name
 const searchFindpersonbyid = (z, bundle) => {
@@ -8,8 +10,27 @@ const searchFindpersonbyid = (z, bundle) => {
       ids: bundle.inputData.ids
     }
   });
-  return responsePromise
-    .then(response => z.JSON.parse(response.content).data);
+  const getPersonCustomFields = z.request({
+    url: `https://${bundle.authData.platform_url}/api/v2/person_custom_fields`
+  });
+  return Promise.all([responsePromise, getPersonCustomFields])
+    .then(responses => {
+      if (responses[0].status === 400) {
+        parseError(responses[0]);
+      }
+      const persons = z.JSON.parse(responses[0].content).data;
+      const customFields = z.JSON.parse(responses[1].content).data;
+      if (persons.length) {
+        return persons.map((person) => {
+          if (person.avatar) {
+            person.avatar.url_pattern = replaceImgSize(person.avatar.url_pattern);
+            person.avatar.default_url_pattern = replaceImgSize(person.avatar.default_url_pattern);
+          }
+          return replaceCustomFields(person, customFields);
+        });
+      }
+      return [];
+    });
 };
 
 module.exports = {

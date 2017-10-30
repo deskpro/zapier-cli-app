@@ -1,4 +1,4 @@
-// "Create" stub created by 'zapier convert'. This is just a stub - you will need to edit!
+const replaceCustomFields = require('../functions/replace_custom_fields');
 
 // create a particular update_organization by name
 const createUpdateorganization = (z, bundle) => {
@@ -7,8 +7,20 @@ const createUpdateorganization = (z, bundle) => {
     url: `https://${bundle.authData.platform_url}/api/v2/organizations/${bundle.inputData.id}`,
     body: JSON.stringify(bundle.inputData)
   });
-  return responsePromise
-    .then(response => z.JSON.parse(response.content).data);
+  const getOrganizationCustomFields = z.request({
+    url: `https://${bundle.authData.platform_url}/api/v2/organization_custom_fields`
+  });
+  return Promise.all([responsePromise, getOrganizationCustomFields])
+    .then(responses => {
+      const organizations = z.JSON.parse(responses[0].content).data;
+      const customFields = z.JSON.parse(responses[1].content).data;
+      if (organizations.length) {
+        return organizations.map((organization) => {
+          return replaceCustomFields(organization, customFields);
+        });
+      }
+      return [];
+    });
 };
 
 module.exports = {
