@@ -39,8 +39,7 @@ module.exports = {
 
   display: {
     label: 'Find Person by Id',
-    description: 'Finds an existing contact by their id.',
-    hidden: true
+    description: 'Finds an existing contact by their id.'
   },
 
   operation: {

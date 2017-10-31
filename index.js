@@ -74,8 +74,46 @@ const App = {
     [CreateorganizationCreate.key]: CreateorganizationCreate,
     [UpdateorganizationCreate.key]: UpdateorganizationCreate,
     [UpdateticketCreate.key]: UpdateticketCreate
-  }
+  },
 
+  searchOrCreates: {
+    [FindpersonSearch.key]: {
+      'key': FindpersonSearch.key,
+      'display': {
+        label: 'Find or Create Person',
+        description: 'Find or Create a Person'
+      },
+      'search': FindpersonSearch.key,
+      'create': CreatepersonCreate.key
+    },
+    [FindpersonbyidSearch.key]: {
+      'key': FindpersonbyidSearch.key,
+      'display': {
+        label: 'Find or Create Person',
+        description: 'Find or Create a Person'
+      },
+      'search': FindpersonbyidSearch.key,
+      'create': CreatepersonCreate.key
+    },
+    [FindorganizationSearch.key]: {
+      'key': FindorganizationSearch.key,
+      'display': {
+        label: 'Find or Create Organization',
+        description: 'Find or Create an Organization'
+      },
+      'search': FindorganizationSearch.key,
+      'create': CreateorganizationCreate.key
+    },
+    [FindorganizationbyidSearch.key]: {
+      'key': FindorganizationbyidSearch.key,
+      'display': {
+        label: 'Find or Create Organization',
+        description: 'Find or Create an Organization'
+      },
+      'search': FindorganizationbyidSearch.key,
+      'create': CreateorganizationCreate.key
+    }
+  }
 };
 
 module.exports = App;

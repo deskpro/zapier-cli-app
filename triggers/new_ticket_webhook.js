@@ -1,3 +1,4 @@
+const parseError = require('../functions/parse_error');
 const GetticketsTrigger = require('./get_tickets');
 
 const getTicket = (z, bundle) => {
@@ -15,7 +16,8 @@ const getTicket = (z, bundle) => {
 const subscribeHook = (z, bundle) => {
   const data = {
     target_url: bundle.targetUrl,
-    event: 'ticket_created'
+    event: 'ticket_created',
+    params: bundle.inputData
   };
 
   // You may return a promise or a normal data structure from any perform method.
@@ -25,6 +27,9 @@ const subscribeHook = (z, bundle) => {
     body: JSON.stringify(data)
   })
     .then((response) => {
+      if (response.status === 400) {
+        parseError(response);
+      }
       return z.JSON.parse(response.content).data;
     });
 };
@@ -64,7 +69,13 @@ module.exports = {
     performList: GetticketsTrigger.operation.perform,
 
     inputFields: [
-
+      {
+        key: 'filter',
+        label: 'Ticket Filter',
+        type: 'integer',
+        required: false,
+        dynamic: 'get_ticket_filters.id.title'
+      }
     ],
     outputFields: [
       {

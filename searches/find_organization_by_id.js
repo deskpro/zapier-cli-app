@@ -30,8 +30,7 @@ module.exports = {
 
   display: {
     label: 'Find Organization by Id',
-    description: 'Find an existing organization by its id.',
-    hidden: true
+    description: 'Find an existing organization by its id.'
   },
 
   operation: {

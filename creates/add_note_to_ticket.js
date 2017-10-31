@@ -2,9 +2,11 @@
 
 // create a particular add_note_to_ticket by name
 const createAddnotetoticket = (z, bundle) => {
+  const ticketId = bundle.inputData.id;
+  delete bundle.inputData.id;
   const responsePromise = z.request({
     method: 'POST',
-    url: `https://${bundle.authData.platform_url}/api/v2/tickets/${bundle.inputData.id}/messages`,
+    url: `https://${bundle.authData.platform_url}/api/v2/tickets/${ticketId}/messages`,
     body: JSON.stringify(bundle.inputData)
   });
   return responsePromise
@@ -34,7 +36,7 @@ module.exports = {
         key: 'is_note',
         label: 'Is Note',
         helpText: 'Is this message an agent note?',
-        type: 'string',
+        type: 'boolean',
         required: false
       },
       {

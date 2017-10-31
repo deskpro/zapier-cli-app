@@ -17,9 +17,7 @@ const createCreateticket = (z, bundle) => {
       if (responses[0].status === 400) {
         parseError(responses[0]);
       }
-      console.log(responses);
       const ticket = z.JSON.parse(responses[0].content).data;
-      console.log(ticket);
       const customFields = z.JSON.parse(responses[1].content).data;
       delete ticket.cc;
       delete ticket.children;

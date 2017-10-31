@@ -33,7 +33,8 @@ module.exports = {
 
   display: {
     label: 'New Ticket (Polling)',
-    description: 'Triggers when a new ticket is created.'
+    description: 'Triggers when a new ticket is created.',
+    hidden: true
   },
 
   operation: {

@@ -37,7 +37,7 @@ const createCreateperson = (z, bundle) => {
 
 module.exports = {
   key: 'create_person',
-  noun: 'Create_person',
+  noun: 'Person',
 
   display: {
     label: 'Create Person',
