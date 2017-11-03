@@ -1,4 +1,4 @@
-// "Create" stub created by 'zapier convert'. This is just a stub - you will need to edit!
+const parseError = require('../functions/parse_error');
 
 // create a particular add_note_to_ticket by name
 const createAddnotetoticket = (z, bundle) => {
@@ -10,7 +10,12 @@ const createAddnotetoticket = (z, bundle) => {
     body: JSON.stringify(bundle.inputData)
   });
   return responsePromise
-    .then(response => z.JSON.parse(response.content).data);
+    .then(response => {
+      if (response.status === 400) {
+        parseError(response);
+      }
+      return z.JSON.parse(response.content).data;
+    });
 };
 
 module.exports = {

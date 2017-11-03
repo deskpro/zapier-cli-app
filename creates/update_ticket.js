@@ -1,17 +1,24 @@
-const convertBodyData = require('../functions/convert_body_data');
+const parseError = require('../functions/parse_error');
 
 // create a particular update_ticket by name
 const createUpdateticket = (z, bundle) => {
+  const ticketId = bundle.inputData.id;
+  delete bundle.inputData.id;
   const responsePromise = z.request({
     method: 'PUT',
-    url: `https://${bundle.authData.platform_url}/api/v2/tickets/${bundle.inputData.id}`,
+    url: `https://${bundle.authData.platform_url}/api/v2/tickets/${ticketId}`,
     params: {
       follow_location: 1
     },
-    body: JSON.stringify(convertBodyData(bundle.inputData))
+    body: JSON.stringify(bundle.inputData)
   });
   return responsePromise
-    .then(response => z.JSON.parse(response.content).data);
+    .then(response => {
+      if (response.status === 400) {
+        parseError(response);
+      }
+      return z.JSON.parse(response.content).data;
+    });
 };
 
 module.exports = {

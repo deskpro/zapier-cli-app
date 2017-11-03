@@ -20,18 +20,13 @@ const createCreateperson = (z, bundle) => {
       if (responses[0].status === 400) {
         parseError(responses[0]);
       }
-      const persons = z.JSON.parse(responses[0].content).data;
+      const person = z.JSON.parse(responses[0].content).data;
       const customFields = z.JSON.parse(responses[1].content).data;
-      if (persons.length) {
-        return persons.map((person) => {
-          if (person.avatar) {
-            person.avatar.url_pattern = replaceImgSize(person.avatar.url_pattern);
-            person.avatar.default_url_pattern = replaceImgSize(person.avatar.default_url_pattern);
-          }
-          return replaceCustomFields(person, customFields);
-        });
+      if (person.avatar) {
+        person.avatar.url_pattern = replaceImgSize(person.avatar.url_pattern);
+        person.avatar.default_url_pattern = replaceImgSize(person.avatar.default_url_pattern);
       }
-      return [];
+      return replaceCustomFields(person, customFields);
     });
 };
 

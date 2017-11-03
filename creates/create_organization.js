@@ -12,14 +12,9 @@ const createCreateorganization = (z, bundle) => {
   });
   return Promise.all([responsePromise, getOrganizationCustomFields])
     .then(responses => {
-      const organizations = z.JSON.parse(responses[0].content).data;
+      const organization = z.JSON.parse(responses[0].content).data;
       const customFields = z.JSON.parse(responses[1].content).data;
-      if (organizations.length) {
-        return organizations.map((organization) => {
-          return replaceCustomFields(organization, customFields);
-        });
-      }
-      return [];
+      return replaceCustomFields(organization, customFields);
     });
 };
 

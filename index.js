@@ -112,6 +112,15 @@ const App = {
       },
       'search': FindorganizationbyidSearch.key,
       'create': CreateorganizationCreate.key
+    },
+    [FindticketSearch.key]: {
+      'key': FindticketSearch.key,
+      'display': {
+        label: 'Find or Create Ticker',
+        description: 'Find or Create a Ticket'
+      },
+      'search': FindticketSearch.key,
+      'create': CreateticketCreate.key
     }
   }
 };
