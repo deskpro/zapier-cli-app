@@ -95,6 +95,21 @@ module.exports = {
       }
     ],
 
+    sample: {
+      "id": 1,
+      "parent": null,
+      "children": [],
+      "title": "Support",
+      "user_title": "Support",
+      "is_tickets_enabled": true,
+      "is_chat_enabled": false,
+      "display_order": 0,
+      "avatar": null,
+      "brands": [
+        1
+      ]
+    },
+
     perform: triggerGetdepartments
   }
 };

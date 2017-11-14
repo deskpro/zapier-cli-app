@@ -61,6 +61,34 @@ module.exports = {
       }
     ],
 
+    sample: {
+      "id": 105,
+      "display_order": 5,
+      "sys_name": "all",
+      "title": "All",
+      "term": [
+        {
+          "type": "status",
+          "op": "is",
+          "options": {
+            "status": "awaiting_agent"
+          }
+        },
+        {
+          "type": "is_hold",
+          "op": "is",
+          "options": {
+            "is_hold": 0
+          }
+        }
+      ],
+      "ticket_filter_set": 1,
+      "filter_views": null,
+      "filter_preferences": null,
+      "date_created": null,
+      "date_updated": null
+    },
+
     perform: triggerGetticketfilters
   }
 };

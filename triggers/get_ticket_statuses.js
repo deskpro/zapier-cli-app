@@ -38,6 +38,11 @@ module.exports = {
       }
     ],
 
+    sample: {
+      id: "awaiting_agent",
+      label: "awaiting_agent"
+    },
+
     perform: triggerGetticketstatuses
   }
 };

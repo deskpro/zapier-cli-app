@@ -248,6 +248,65 @@ module.exports = {
       }
     ],
 
+    sample: {
+      "id": 1,
+      "primary_email": "john.doe@deskpro.com",
+      "first_name": "John",
+      "last_name": "Doe",
+      "name": "John Doe",
+      "display_name": "John Doe",
+      "is_agent": true,
+      "avatar": {
+        "default_url_pattern": null,
+        "url_pattern": null,
+        "base_gravatar_url": null
+      },
+      "online": true,
+      "last_seen": "2017-11-14T10:17:12+0000",
+      "agent_data": null,
+      "picture_blob": null,
+      "disable_picture": false,
+      "gravatar_url": null,
+      "is_contact": false,
+      "is_user": true,
+      "was_agent": false,
+      "can_agent": true,
+      "can_admin": true,
+      "can_billing": true,
+      "disable_autoresponses": false,
+      "disable_autoresponses_log": "",
+      "is_confirmed": true,
+      "is_deleted": false,
+      "is_disabled": false,
+      "creation_system": "web.person",
+      "override_display_name": "",
+      "summary": "",
+      "language": 1,
+      "organization": null,
+      "organization_position": "",
+      "organization_manager": false,
+      "timezone": "UTC",
+      "date_created": "2017-11-09T16:50:07+0000",
+      "date_last_login": "2017-11-14T10:15:42+0000",
+      "browser": "Mozilla\/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit\/537.36 (KHTML, like Gecko) Chrome\/62.0.3202.89 Safari\/537.36",
+      "user_groups": [],
+      "agent_groups": [1],
+      "labels": [
+        "admin",
+        "board"
+      ],
+      "emails": [
+        "john.doe@deskpro.com"
+      ],
+      "phone_numbers": [],
+      "tickets_count": 54,
+      "chats_count": 0,
+      "fields": {},
+      "contact_data": [],
+      "teams": [],
+      "primary_team": null
+    },
+
     perform: triggerNewperson
   }
 };

@@ -50,6 +50,13 @@ module.exports = {
       }
     ],
 
+    sample: {
+      "id": 1,
+      "name": "Blue",
+      "color": "blue",
+      "hex": "#0000FF"
+    },
+
     perform: triggerGetstars
   }
 };

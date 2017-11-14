@@ -119,6 +119,22 @@ module.exports = {
       }
     ],
 
+    sample: {
+      "id": 1,
+      "name": "Deskpro",
+      "summary": "",
+      "importance": 0,
+      "fields": {},
+      "user_groups": [],
+      "labels": [],
+      "contact_data": [],
+      "email_domains": [],
+      "date_created": "2017-11-09T16:50:40+0000",
+      "parent": null,
+      "chats_count": 0,
+      "tickets_count": 10
+    },
+
     perform: triggerGetorganizations
   }
 };
