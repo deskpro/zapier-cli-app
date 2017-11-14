@@ -1,13 +1,14 @@
 const parseError = require('../functions/parse_error');
 const replaceImgSize = require('../functions/replace_img_size');
 const replaceCustomFields = require('../functions/replace_custom_fields');
+const formatLabels = require('../functions/format_labels');
 
 // create a particular create_person by name
 const createCreateperson = (z, bundle) => {
   const responsePromise = z.request({
     method: 'POST',
     url: `https://${bundle.authData.platform_url}/api/v2/people`,
-    body: JSON.stringify(bundle.inputData),
+    body: JSON.stringify(formatLabels(bundle.inputData)),
     headers: {
       'content-type': 'application/json'
     }
@@ -91,6 +92,7 @@ module.exports = {
       {
         key: 'labels',
         label: 'Labels',
+        helpText: 'Comma separated list of labels',
         type: 'string',
         required: false
       }

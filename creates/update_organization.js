@@ -1,11 +1,12 @@
 const replaceCustomFields = require('../functions/replace_custom_fields');
+const formatLabels = require('../functions/format_labels');
 
 // create a particular update_organization by name
 const createUpdateorganization = (z, bundle) => {
   const responsePromise = z.request({
     method: 'PUT',
     url: `https://${bundle.authData.platform_url}/api/v2/organizations/${bundle.inputData.id}`,
-    body: JSON.stringify(bundle.inputData)
+    body: JSON.stringify(formatLabels(bundle.inputData))
   });
   const getOrganizationCustomFields = z.request({
     url: `https://${bundle.authData.platform_url}/api/v2/organization_custom_fields`
@@ -56,7 +57,7 @@ module.exports = {
       {
         key: 'labels',
         label: 'Labels',
-        helpText: 'Replace the existing list of labels.',
+        helpText: 'Replace the existing list of labels. Comma separated list of labels',
         type: 'string',
         required: false
       }

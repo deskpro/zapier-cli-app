@@ -1,13 +1,14 @@
 const parseError = require('../functions/parse_error');
 const replaceCustomFields = require('../functions/replace_custom_fields');
 const convertBodyData = require('../functions/convert_body_data');
+const formatLabels = require('../functions/format_labels');
 
 // create a particular create_ticket by name
 const createCreateticket = (z, bundle) => {
   const responsePromise = z.request({
     method: 'POST',
     url: `https://${bundle.authData.platform_url}/api/v2/tickets`,
-    body: JSON.stringify(convertBodyData(bundle.inputData))
+    body: JSON.stringify(formatLabels(convertBodyData(bundle.inputData)))
   });
   const getTicketCustomFields = z.request({
     url: `https://${bundle.authData.platform_url}/api/v2/ticket_custom_fields`
@@ -99,6 +100,7 @@ module.exports = {
       {
         key: 'labels',
         label: 'Labels',
+        helpText: 'Comma separated list of labels',
         type: 'string',
         required: false
       }

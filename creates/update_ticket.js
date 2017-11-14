@@ -1,4 +1,5 @@
 const parseError = require('../functions/parse_error');
+const formatLabels = require('../functions/format_labels');
 
 // create a particular update_ticket by name
 const createUpdateticket = (z, bundle) => {
@@ -10,7 +11,7 @@ const createUpdateticket = (z, bundle) => {
     params: {
       follow_location: 1
     },
-    body: JSON.stringify(bundle.inputData)
+    body: JSON.stringify(formatLabels(bundle.inputData))
   });
   return responsePromise
     .then(response => {
@@ -71,6 +72,7 @@ module.exports = {
       {
         key: 'labels',
         label: 'Labels',
+        helpText: 'Replace the existing list of labels. Comma separated list of labels',
         type: 'string',
         required: false
       }
