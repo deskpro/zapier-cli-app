@@ -6,6 +6,7 @@ const NewticketpollingTrigger = require('./triggers/new_ticket_polling');
 const GetstarsTrigger = require('./triggers/get_stars');
 const GetticketfiltersTrigger = require('./triggers/get_ticket_filters');
 const NewticketwebhookTrigger = require('./triggers/new_ticket_webhook');
+const GetagentsTrigger = require('./triggers/get_agents');
 const GetpersonsTrigger = require('./triggers/get_persons');
 const GetorganizationsTrigger = require('./triggers/get_organizations');
 const GetticketstatusesTrigger = require('./triggers/get_ticket_statuses');
@@ -15,8 +16,6 @@ const NeworganizationTrigger = require('./triggers/new_organization');
 const GetticketsTrigger = require('./triggers/get_tickets');
 const FindpersonSearch = require('./searches/find_person');
 const FindorganizationSearch = require('./searches/find_organization');
-const FindpersonbyidSearch = require('./searches/find_person_by_id');
-const FindorganizationbyidSearch = require('./searches/find_organization_by_id');
 const FindticketSearch = require('./searches/find_ticket');
 const CreatepersonCreate = require('./creates/create_person');
 const CreateticketCreate = require('./creates/create_ticket');
@@ -50,6 +49,7 @@ const App = {
     [GetstarsTrigger.key]: GetstarsTrigger,
     [GetticketfiltersTrigger.key]: GetticketfiltersTrigger,
     [NewticketwebhookTrigger.key]: NewticketwebhookTrigger,
+    [GetagentsTrigger.key]: GetagentsTrigger,
     [GetpersonsTrigger.key]: GetpersonsTrigger,
     [GetorganizationsTrigger.key]: GetorganizationsTrigger,
     [GetticketstatusesTrigger.key]: GetticketstatusesTrigger,
@@ -62,8 +62,6 @@ const App = {
   searches: {
     [FindpersonSearch.key]: FindpersonSearch,
     [FindorganizationSearch.key]: FindorganizationSearch,
-    [FindpersonbyidSearch.key]: FindpersonbyidSearch,
-    [FindorganizationbyidSearch.key]: FindorganizationbyidSearch,
     [FindticketSearch.key]: FindticketSearch
   },
 
@@ -86,15 +84,6 @@ const App = {
       'search': FindpersonSearch.key,
       'create': CreatepersonCreate.key
     },
-    [FindpersonbyidSearch.key]: {
-      'key': FindpersonbyidSearch.key,
-      'display': {
-        label: 'Find or Create Person',
-        description: 'Find or Create a Person'
-      },
-      'search': FindpersonbyidSearch.key,
-      'create': CreatepersonCreate.key
-    },
     [FindorganizationSearch.key]: {
       'key': FindorganizationSearch.key,
       'display': {
@@ -104,19 +93,10 @@ const App = {
       'search': FindorganizationSearch.key,
       'create': CreateorganizationCreate.key
     },
-    [FindorganizationbyidSearch.key]: {
-      'key': FindorganizationbyidSearch.key,
-      'display': {
-        label: 'Find or Create Organization',
-        description: 'Find or Create an Organization'
-      },
-      'search': FindorganizationbyidSearch.key,
-      'create': CreateorganizationCreate.key
-    },
     [FindticketSearch.key]: {
       'key': FindticketSearch.key,
       'display': {
-        label: 'Find or Create Ticker',
+        label: 'Find or Create Ticket',
         description: 'Find or Create a Ticket'
       },
       'search': FindticketSearch.key,

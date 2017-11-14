@@ -48,7 +48,8 @@ module.exports = {
         key: 'format',
         label: 'Format',
         type: 'string',
-        required: false
+        required: false,
+        choices: {text: "Text", html: "HTML"}
       },
       {
         key: 'message',

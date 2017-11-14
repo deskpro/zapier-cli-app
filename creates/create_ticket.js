@@ -52,7 +52,8 @@ module.exports = {
         label: 'Agent',
         helpText: 'Agent assign to the ticket, you can use Id or email address.',
         type: 'string',
-        required: false
+        required: false,
+        dynamic: 'get_agents.id.name'
       },
       {
         key: 'subject',
@@ -76,7 +77,7 @@ module.exports = {
       {
         key: 'message__person',
         label: 'Message Author',
-        helpText: 'Optional, can be an Id or email address.',
+        helpText: 'Can be an Id or email address.',
         type: 'string',
         required: false,
         dynamic: 'get_persons.id.name',
