@@ -180,7 +180,5 @@ module.exports = {
       "ip_address": "192.168.0.1",
       "id": 1
     },
-
-    perform: triggerNewticketreply
   }
 };
