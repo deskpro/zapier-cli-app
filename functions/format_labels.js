@@ -1,5 +1,9 @@
 const formatLabels = (data) => {
-  data.labels = data.labels.split(',').map((item) => item.trim());
+  if (data.labels) {
+    data.labels = data.labels.split(',').map((item) => item.trim());
+  } else {
+    data.labels = [];
+  }
   return data;
 };
 
