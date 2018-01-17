@@ -1,3 +1,7 @@
+## 1.0.4
+
+* Adapt extra fields to create organization action.
+
 ## 1.0.3
 
 * Fix empty labels error

@@ -1,12 +1,23 @@
 const replaceCustomFields = require('../functions/replace_custom_fields');
 const formatLabels = require('../functions/format_labels');
+const convertBodyData = require('../functions/convert_body_data');
+const formatCommaSeparated = require('../functions/format_comma_separated');
+const phoneUtil = require('google-libphonenumber').PhoneNumberUtil.getInstance();
 
 // create a particular create_organization by name
 const createCreateorganization = (z, bundle) => {
+  let inputData = formatLabels(bundle.inputData);
+  inputData = formatCommaSeparated(inputData, 'email_domains');
+  if (inputData['contact_data__phone__0__number']) {
+    let phone = phoneUtil.parse(inputData['contact_data__phone__0__number']);
+    inputData['contact_data__phone__0__number'] = phone.getNationalNumber();
+    inputData['contact_data__phone__0__code'] = phone.getCountryCode();
+    inputData['contact_data__phone__0__type'] = 'phone';
+  }
   const responsePromise = z.request({
     method: 'POST',
     url: `https://${bundle.authData.platform_url}/api/v2/organizations`,
-    body: JSON.stringify(formatLabels(bundle.inputData))
+    body: JSON.stringify(convertBodyData(inputData))
   });
   const getOrganizationCustomFields = z.request({
     url: `https://${bundle.authData.platform_url}/api/v2/organization_custom_fields`
@@ -46,6 +57,59 @@ module.exports = {
         key: 'labels',
         label: 'Labels',
         helpText: 'Comma separated list of labels',
+        type: 'string',
+        required: false
+      },
+      {
+        key: 'parent',
+        label: 'Parent organization',
+        type: 'string',
+        required: false,
+        dynamic: 'get_organizations.id.name',
+        search: 'find_organization.id'
+      },
+      {
+        key: 'email_domains',
+        label: 'Email domains',
+        helpText: 'Comma separated list of email domains to be associated to the organization',
+        type: 'string',
+        required: false
+      },
+      {
+        key: 'contact_data__phone__0__number',
+        label: 'Phone number',
+        helpText: 'Phone number in international format',
+        type: 'string',
+        required: false,
+        placeholder: '+441234567890'
+      },
+      {
+        key: 'contact_data__address__0__address',
+        label: 'Street Address',
+        type: 'string',
+        required: false
+      },
+      {
+        key: 'contact_data__address__0__city',
+        label: 'City',
+        type: 'string',
+        required: false
+      },
+      {
+        key: 'contact_data__address__0__state',
+        label: 'State',
+        type: 'string',
+        required: false
+      },
+      {
+        key: 'contact_data__address__0__zip',
+        label: 'Postal / Zip code',
+        type: 'string',
+        required: false
+      },
+      {
+        key: 'contact_data__address__0__country',
+        label: 'Country',
         type: 'string',
         required: false
       }

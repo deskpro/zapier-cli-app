@@ -1,5 +1,6 @@
 const replaceCustomFields = (object, customFields) => {
   const newFields = {};
+  console.log(object);
   object.fields = Object.keys(object.fields).forEach((id) => {
     let title = id;
     const customField = customFields.find(field => field.id === parseInt(id, 10));

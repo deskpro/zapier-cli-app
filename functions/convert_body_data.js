@@ -1,11 +1,16 @@
 const convertBodyData = (data) => {
   Object.keys(data).forEach(key => {
-    const matches = key.match(/^([a-z]+)__(.+)$/);
-    if (matches) {
-      if (!data[matches[1]]) {
-        data[matches[1]] = {};
+    const splits = key.split('__');
+    if (splits.length > 1) {
+      let ref = data;
+      for (let i = 0; i < splits.length; i++) {
+        let j = splits[i];
+        if (i === splits.length - 1) {
+          ref[j] = data[key];
+        } else {
+          ref = ref[j] = ref[j] || {};
+        }
       }
-      data[matches[1]][matches[2]] = data[key];
       delete data[key];
     }
   });
