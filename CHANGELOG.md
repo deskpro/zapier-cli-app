@@ -1,3 +1,11 @@
+## 1.0.6
+
+Update platform-core and fix tests
+
+## 1.0.5
+
+* Improve error render on create organization
+
 ## 1.0.4
 
 * Adapt extra fields to create organization action.

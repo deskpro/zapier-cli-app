@@ -1,3 +1,4 @@
+const parseError = require('../functions/parse_error');
 const replaceCustomFields = require('../functions/replace_custom_fields');
 const formatLabels = require('../functions/format_labels');
 const convertBodyData = require('../functions/convert_body_data');
@@ -24,6 +25,9 @@ const createCreateorganization = (z, bundle) => {
   });
   return Promise.all([responsePromise, getOrganizationCustomFields])
     .then(responses => {
+      if (responses[0].status === 400) {
+        parseError(responses[0]);
+      }
       const organization = z.JSON.parse(responses[0].content).data;
       const customFields = z.JSON.parse(responses[1].content).data;
       return replaceCustomFields(organization, customFields);

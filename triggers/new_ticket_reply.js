@@ -2,7 +2,6 @@
 
 // triggers on new_ticket_reply with a certain tag
 const triggerNewticketreply = (z, bundle) => {
-  z.console.log(bundle);
   const responsePromise = z.request({
     url: `https://${bundle.authData.platform_url}/api/v2/tickets/1/messages`
   });
@@ -11,7 +10,6 @@ const triggerNewticketreply = (z, bundle) => {
 };
 
 const getTicketReply = (z, bundle) => {
-  z.console.log(bundle);
   const ticketReply = bundle.cleanedRequest;
 
   return [ticketReply];

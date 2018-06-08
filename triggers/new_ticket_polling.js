@@ -2,13 +2,16 @@ const replaceCustomFields = require('../functions/replace_custom_fields');
 
 // triggers on new_ticket_polling with a certain tag
 const triggerNewticketpolling = (z, bundle) => {
+  const params = {
+    order_by: 'id',
+    order_dir: 'desc'
+  };
+  if (bundle.inputData.filter) {
+    params.filter = bundle.inputData.filter;
+  }
   const responsePromise = z.request({
     url: `https://${bundle.authData.platform_url}/api/v2/tickets`,
-    params: {
-      order_by: 'id',
-      order_dir: 'desc',
-      filter: bundle.inputData.filter
-    }
+    params: params
   });
   const getTicketCustomFields = z.request({
     url: `https://${bundle.authData.platform_url}/api/v2/ticket_custom_fields`

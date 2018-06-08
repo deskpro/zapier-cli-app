@@ -13,6 +13,9 @@ const createUpdateorganization = (z, bundle) => {
   });
   return Promise.all([responsePromise, getOrganizationCustomFields])
     .then(responses => {
+      if (responses[0].status === 400) {
+        parseError(responses[0]);
+      }
       const organizations = z.JSON.parse(responses[0].content).data;
       const customFields = z.JSON.parse(responses[1].content).data;
       if (organizations.length) {
