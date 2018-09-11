@@ -1,3 +1,7 @@
+## 1.0.7
+
+Update platform-core
+
 ## 1.0.6
 
 Update platform-core and fix tests
