@@ -14,6 +14,7 @@ const NewticketreplyTrigger = require('./triggers/new_ticket_reply');
 const NewpersonTrigger = require('./triggers/new_person');
 const NeworganizationTrigger = require('./triggers/new_organization');
 const GetticketsTrigger = require('./triggers/get_tickets');
+const TicketUpdate = require('./triggers/ticket_update');
 const FindpersonSearch = require('./searches/find_person');
 const FindorganizationSearch = require('./searches/find_organization');
 const FindticketSearch = require('./searches/find_ticket');
@@ -56,7 +57,8 @@ const App = {
     [NewticketreplyTrigger.key]: NewticketreplyTrigger,
     [NewpersonTrigger.key]: NewpersonTrigger,
     [NeworganizationTrigger.key]: NeworganizationTrigger,
-    [GetticketsTrigger.key]: GetticketsTrigger
+    [GetticketsTrigger.key]: GetticketsTrigger,
+    [TicketUpdate.key]: TicketUpdate,
   },
 
   searches: {

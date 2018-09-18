@@ -1,24 +1,24 @@
 // Trigger stub created by 'zapier convert'. This is just a stub - you will need to edit!
 
-// triggers on new_ticket_reply with a certain tag
-const triggerNewticketreply = (z, bundle) => {
+// triggers on ticket_update
+const triggerTicketUpdate = (z, bundle) => {
   const responsePromise = z.request({
-    url: `https://${bundle.authData.platform_url}/api/v2/apps/zapier/example/new_ticket_reply`
+    url: `https://${bundle.authData.platform_url}/api/v2/apps/zapier/example/ticket_update`
   });
   return responsePromise
     .then(response => [z.JSON.parse(response.content)]);
 };
 
-const getTicketReply = (z, bundle) => {
-  const ticketReply = bundle.cleanedRequest;
+const getTicketUpdate = (z, bundle) => {
+  const ticketUpdate = bundle.cleanedRequest;
 
-  return [ticketReply];
+  return [ticketUpdate];
 };
 
 const subscribeHook = (z, bundle) => {
   const data = {
     target_url: bundle.targetUrl,
-    event: 'new_ticket_reply'
+    event: 'ticket_update'
   };
 
   // You may return a promise or a normal data structure from any perform method.
@@ -47,12 +47,12 @@ const unsubscribeHook = (z, bundle) => {
 };
 
 module.exports = {
-  key: 'new_ticket_reply',
-  noun: 'Reply',
+  key: 'ticket_update',
+  noun: 'Ticket Update',
 
   display: {
-    label: 'New Ticket Reply',
-    description: 'Triggers when a ticket is answered.'
+    label: 'Ticket Update',
+    description: 'Triggers when a ticket is updated.'
   },
 
   operation: {
@@ -61,8 +61,8 @@ module.exports = {
     performSubscribe: subscribeHook,
     performUnsubscribe: unsubscribeHook,
 
-    perform: getTicketReply,
-    performList: triggerNewticketreply,
+    perform: getTicketUpdate,
+    performList: triggerTicketUpdate,
 
     inputFields: [],
     outputFields: [
