@@ -8,7 +8,11 @@ const triggerTesttrigger = (z, bundle) => {
   return responsePromise
     .then(response => {
       if (response.status === 401) {
-        throw new Error(response.json.message);
+        if (response.json.message === 'Invalid API key.') {
+          throw new Error('Your key appears to be invalid, if it\'s a Superuser API Key did you set a default agent?');
+        } else {
+          throw new Error(response.json.message);
+        }
       }
       if (response.status !== 200 || (response.status === 200 && response.content !== "[]")) {
         throw new Error('Invalid url.');
