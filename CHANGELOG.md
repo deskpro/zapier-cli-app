@@ -1,3 +1,7 @@
+## 1.0.9
+
+Add ticket updated trigger
+
 ## 1.0.8
 
 Update platform-core to 7.2.1
