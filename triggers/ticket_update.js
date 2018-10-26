@@ -6,11 +6,11 @@ const triggerTicketUpdate = (z, bundle) => {
     url: `https://${bundle.authData.platform_url}/api/v2/apps/zapier/example/ticket_update`
   });
   return responsePromise
-    .then(response => [z.JSON.parse(response.content)]);
+    .then(response => [z.JSON.parse(response.content).data]);
 };
 
 const getTicketUpdate = (z, bundle) => {
-  const ticketUpdate = bundle.cleanedRequest;
+  const ticketUpdate = bundle.cleanedRequest.data;
 
   return [ticketUpdate];
 };
@@ -27,9 +27,7 @@ const subscribeHook = (z, bundle) => {
     method: 'POST',
     body: JSON.stringify(data)
   })
-    .then((response) => {
-      return z.JSON.parse(response.content).data;
-    });
+    .then((response) => z.JSON.parse(response.content).data);
 };
 
 const unsubscribeHook = (z, bundle) => {
