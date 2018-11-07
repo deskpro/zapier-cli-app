@@ -1,3 +1,7 @@
+## 1.0.11
+
+Update platform-core to 7.4.0
+
 ## 1.0.10
 
 Fix ticket updated data format
