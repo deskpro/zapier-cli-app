@@ -15,11 +15,11 @@ const searchFindperson = (z, bundle) => {
   });
   return Promise.all([responsePromise, getPersonCustomFields])
     .then(responses => {
+      const customFields = z.JSON.parse(responses[1].content).data;
       if (responses[0].status === 400) {
-        parseError(responses[0]);
+        parseError(responses[0], customFields);
       }
       const persons = z.JSON.parse(responses[0].content).data;
-      const customFields = z.JSON.parse(responses[1].content).data;
       if (persons.length) {
         return persons.map((person) => {
           if (person.avatar) {

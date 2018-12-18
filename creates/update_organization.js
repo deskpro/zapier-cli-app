@@ -13,11 +13,11 @@ const createUpdateorganization = (z, bundle) => {
   });
   return Promise.all([responsePromise, getOrganizationCustomFields])
     .then(responses => {
+      const customFields = z.JSON.parse(responses[1].content).data;
       if (responses[0].status === 400) {
-        parseError(responses[0]);
+        parseError(responses[0], customFields);
       }
       const organizations = z.JSON.parse(responses[0].content).data;
-      const customFields = z.JSON.parse(responses[1].content).data;
       if (organizations.length) {
         return organizations.map((organization) => {
           return replaceCustomFields(organization, customFields);

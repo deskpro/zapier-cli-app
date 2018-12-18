@@ -12,11 +12,11 @@ const triggerGettickets = (z, bundle) => {
   });
   return Promise.all([responsePromise, getTicketCustomFields])
     .then(responses => {
+      const customFields = z.JSON.parse(responses[1].content).data;
       if (responses[0].status === 400) {
-        parseError(responses[0]);
+        parseError(responses[0], customFields);
       }
       const tickets = z.JSON.parse(responses[0].content).data;
-      const customFields = z.JSON.parse(responses[1].content).data;
       return tickets.map(ticket => {
         delete ticket.cc;
         delete ticket.children;

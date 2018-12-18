@@ -15,11 +15,11 @@ const createCreateticket = (z, bundle) => {
   });
   return Promise.all([responsePromise, getTicketCustomFields])
     .then(responses => {
+      const customFields = z.JSON.parse(responses[1].content).data;
       if (responses[0].status === 400) {
-        parseError(responses[0]);
+        parseError(responses[0], customFields);
       }
       const ticket = z.JSON.parse(responses[0].content).data;
-      const customFields = z.JSON.parse(responses[1].content).data;
       delete ticket.cc;
       delete ticket.children;
       delete ticket.product;

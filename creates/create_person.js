@@ -18,11 +18,11 @@ const createCreateperson = (z, bundle) => {
   });
   return Promise.all([responsePromise, getPersonCustomFields])
     .then(responses => {
+      const customFields = z.JSON.parse(responses[1].content).data;
       if (responses[0].status === 400) {
-        parseError(responses[0]);
+        parseError(responses[0], customFields);
       }
       const person = z.JSON.parse(responses[0].content).data;
-      const customFields = z.JSON.parse(responses[1].content).data;
       if (person.avatar) {
         person.avatar.url_pattern = replaceImgSize(person.avatar.url_pattern);
         person.avatar.default_url_pattern = replaceImgSize(person.avatar.default_url_pattern);
