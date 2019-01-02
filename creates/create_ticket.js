@@ -28,6 +28,104 @@ const createCreateticket = (z, bundle) => {
     });
 };
 
+const departmentLayouts = (z, bundle) => {
+  if (!bundle.inputData.department) {
+    return [];
+  }
+  const getLayouts = z.request({
+    url: `https://${bundle.authData.platform_url}/api/v2/ticket_layouts/agent/${bundle.inputData.department}`
+  });
+  const getTicketCustomFields = z.request({
+    url: `https://${bundle.authData.platform_url}/api/v2/ticket_custom_fields`
+  });
+  return Promise.all([getLayouts, getTicketCustomFields])
+    .then(responses => {
+      if (responses[0].json.data) {
+        const fields = responses[0].json.data.fields
+          .filter(field => field.field_type === 'ticket_field' && field.options.on_newticket)
+          .map(field => {
+            const id = field.field_id.replace('ticket_field_', '');
+            const customField = responses[1].json.data.find(f => f.id === parseInt(id, 10));
+            if (customField) {
+              const inputField = {
+                key: field.field_id.replace('ticket_field_', 'fields__'),
+                helpText: customField.description,
+                label: customField.title,
+                required: field.required,
+              };
+              switch (customField.widget_type) {
+                case 'checkbox':
+                case 'multichoice':
+                  inputField.list = true;
+                case 'choice':
+                case 'radio':
+                  inputField.choices = customField.choices.reduce((map, obj) => {
+                    map[obj.id] = obj.title;
+                    return map;
+                  }, {});
+                  break;
+                case 'toggle':
+                  inputField.type = 'boolean';
+                  inputField.required = true;
+                  inputField.default = customField.default_value === 1;
+                  break;
+                case 'date':
+                  inputField.type = 'datetime';
+                  break;
+                case 'textarea':
+                  inputField.type = 'text';
+                  break;
+                case 'text':
+                default:
+                  inputField.type = 'string';
+                  break;
+              }
+              return inputField;
+            }
+            return null;
+          });
+        const priority = responses[0].json.data.fields.find(field => field.field_type === 'priority');
+        if (priority && priority.options.on_newticket) {
+          fields.push({
+            key: 'priority',
+            label: 'Priority',
+            required: priority.required,
+            dynamic: 'get_ticket_priorities.id.label'
+          })
+        }
+        const category = responses[0].json.data.fields.find(field => field.field_type === 'category');
+        if (category && category.options.on_newticket) {
+          fields.push({
+            key: 'category',
+            label: 'Category',
+            required: category.required,
+            dynamic: 'get_ticket_categories.id.label'
+          })
+        }
+        const product = responses[0].json.data.fields.find(field => field.field_type === 'product');
+        if (product && product.options.on_newticket) {
+          fields.push({
+            key: 'product',
+            label: 'Product',
+            required: product.required,
+            dynamic: 'get_ticket_products.id.label'
+          })
+        }
+        const workflow = responses[0].json.data.fields.find(field => field.field_type === 'workflow');
+        if (workflow && workflow.options.on_newticket) {
+          fields.push({
+            key: 'workflow',
+            label: 'Workflow',
+            required: workflow.required,
+            dynamic: 'get_ticket_workflows.id.label'
+          })
+        }
+        return fields;
+      }
+      return [];
+  });
+};
+
 module.exports = {
   key: 'create_ticket',
   noun: 'Ticket',
@@ -45,7 +143,8 @@ module.exports = {
         label: 'Department',
         type: 'integer',
         required: false,
-        dynamic: 'get_departments.id.title'
+        dynamic: 'get_departments.id.title',
+        altersDynamicFields: true
       },
       {
         key: 'agent',
@@ -104,7 +203,8 @@ module.exports = {
         helpText: 'Comma separated list of labels',
         type: 'string',
         required: false
-      }
+      },
+      departmentLayouts
     ],
     outputFields: [
       {

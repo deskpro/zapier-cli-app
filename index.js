@@ -9,6 +9,10 @@ const NewticketwebhookTrigger = require('./triggers/new_ticket_webhook');
 const GetagentsTrigger = require('./triggers/get_agents');
 const GetpersonsTrigger = require('./triggers/get_persons');
 const GetorganizationsTrigger = require('./triggers/get_organizations');
+const getTicketCategories = require('./triggers/get_ticket_categories');
+const getTicketPriorities = require('./triggers/get_ticket_priorities');
+const getTicketProducts = require('./triggers/get_ticket_products');
+const getTicketWorkflows = require('./triggers/get_ticket_workflows');
 const GetticketstatusesTrigger = require('./triggers/get_ticket_statuses');
 const NewticketreplyTrigger = require('./triggers/new_ticket_reply');
 const NewpersonTrigger = require('./triggers/new_person');
@@ -41,6 +45,10 @@ const App = {
   ],
 
   resources: {
+    [getTicketCategories.key]: getTicketCategories,
+    [getTicketPriorities.key]: getTicketPriorities,
+    [getTicketProducts.key]: getTicketProducts,
+    [getTicketWorkflows.key]: getTicketWorkflows,
   },
 
   triggers: {

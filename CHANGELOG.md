@@ -1,3 +1,25 @@
+## 1.0.16
+
+Improve toggle custom fields
+
+## 1.0.15
+
+Add support for toggle custom fields
+
+## 1.0.14
+
+Add support for ticket priorities, products, categories adn workflows
+Support multiple values on custom fields
+
+## 1.0.13
+
+Add custom fields support to create_ticket
+
+## 1.0.12
+
+Update platform-core to 7.5.0
+Improve error logging
+
 ## 1.0.11
 
 Update platform-core to 7.4.0
