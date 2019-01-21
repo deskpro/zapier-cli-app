@@ -2,7 +2,7 @@ const parseError = require('../functions/parse_error');
 const GetticketsTrigger = require('./get_tickets');
 
 const getTicket = (z, bundle) => {
-  const ticket = bundle.cleanedRequest;
+  const ticket = bundle.cleanedRequest.data;
 
   delete ticket.cc;
   delete ticket.children;

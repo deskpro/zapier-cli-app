@@ -1,3 +1,11 @@
+## 1.0.18
+
+Fix missing payload on new ticket
+
+## 1.0.17
+
+Update platform-core to 7.6.0
+
 ## 1.0.16
 
 Improve toggle custom fields
