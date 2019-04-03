@@ -1,6 +1,6 @@
 {
   "name": "deskpro-zapier",
-  "version": "1.0.18",
+  "version": "1.0.19",
   "description": "Deskpro is a web-based helpdesk software with multiple channel support.",
   "main": "index.js",
   "scripts": {
@@ -13,13 +13,13 @@
   "dependencies": {
     "google-libphonenumber": "^3.0.10",
     "lodash": "^4.17.10",
-    "zapier-platform-core": "7.6.0"
+    "zapier-platform-core": "8.0.1"
   },
   "devDependencies": {
-    "babel": "6.5.2",
-    "babel-eslint": "6.1.2",
-    "mocha": "^5.2.0",
-    "should": "9.0.2"
+    "babel": "6.23.0",
+    "babel-eslint": "10.0.1",
+    "mocha": "^6.0.2",
+    "should": "13.2.3"
   },
   "repository": {
     "type": "git",

@@ -5,11 +5,31 @@ const triggerGetticketstatuses = (z, bundle) => {
   });
   return responsePromise
     .then(response => {
-      const statuses = [];
+      const statuses = [
+        {
+          id: 'awaiting_agent',
+          label: 'Awaiting agent'
+        },
+        {
+          id: 'awaiting_user',
+          label: 'Awaiting user'
+        },
+        {
+          id: 'pending',
+          label: 'Pending'
+        },
+        {
+          id: 'resolved',
+          label: 'Resolved'
+        }
+      ];
       const content = z.JSON.parse(response.content);
       content.data.forEach(function( status ) {
-        if (!status.match(/^hidden/)) {
-          statuses.push({id:status, label:status});
+        if (status.status_type !== 'hidden') {
+          statuses.push({
+            id:status.status_code,
+            label:status.title
+          });
         }
       });
       return statuses;
@@ -39,8 +59,8 @@ module.exports = {
     ],
 
     sample: {
-      id: "awaiting_agent",
-      label: "awaiting_agent"
+      id: 'awaiting_agent',
+      label: 'awaiting_agent'
     },
 
     perform: triggerGetticketstatuses
