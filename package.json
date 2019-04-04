@@ -1,6 +1,6 @@
 {
   "name": "deskpro-zapier",
-  "version": "1.0.19",
+  "version": "1.0.20",
   "description": "Deskpro is a web-based helpdesk software with multiple channel support.",
   "main": "index.js",
   "scripts": {

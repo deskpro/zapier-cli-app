@@ -183,6 +183,13 @@ module.exports = {
         search: 'find_person.id'
       },
       {
+        key: 'message__is_note',
+        label: 'Is Note',
+        helpText: 'Create message as an agent note',
+        type: 'boolean',
+        required: false,
+      },
+      {
         key: 'person',
         label: 'Person',
         type: 'string',

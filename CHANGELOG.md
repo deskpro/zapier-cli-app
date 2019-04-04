@@ -1,3 +1,11 @@
+## 1.0.20
+
+Allow to create ticket with note as first message
+
+## 1.0.19
+
+Fix ticket status error
+
 ## 1.0.18
 
 Fix missing payload on new ticket

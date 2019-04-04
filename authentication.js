@@ -25,6 +25,6 @@ module.exports = {
   ],
   connectionLabel: '{{bundle.authData.platform_url}}',
   // The test method allows Zapier to verify that the credentials a user provides are valid. We'll execute this
-  // method whenver a user connects their account for the first time.
+  // method whenever a user connects their account for the first time.
   test: TesttriggerTrigger.operation.perform
 };
