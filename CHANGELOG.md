@@ -1,3 +1,8 @@
+## 1.0.21
+
+Update platform-core to 10.2.0
+Add missing sample on find & create person / organization
+
 ## 1.0.20
 
 Allow to create ticket with note as first message
