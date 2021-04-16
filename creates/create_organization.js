@@ -175,6 +175,26 @@ module.exports = {
         type: 'string'
       }
     ],
+    sample: {
+      "id": 1,
+      "name": "Barton-Wuckert",
+      "summary": "Alice could only hear whispers now and then; such as, 'Sure, I don't believe you do either!' And the Gryphon interrupted in a large caterpillar, that was sitting on a little timidly, 'why you are very dull!' 'You ought to have wondered at this, but at last it sat for a long time together.' 'Which is just the case with my wife; And the moral of that dark hall, and close to her: its face to see a little scream of laughter. 'Oh, hush!' the Rabbit hastily interrupted. 'There's a great hurry to.",
+      "importance": 1,
+      "fields": {},
+      "user_groups": [],
+      "labels": [
+        "beer koelpin and prohaska",
+        "eichmann lowe and labadie",
+        "walter llc"
+      ],
+      "contact_data": [],
+      "email_domains": [],
+      "date_created": "2020-12-08T21:38:05+0000",
+      "parent": null,
+      "chats_count": 0,
+      "tickets_count": 3,
+      "phone_numbers": []
+    },
 
     perform: createCreateorganization
   }

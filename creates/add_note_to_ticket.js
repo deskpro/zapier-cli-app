@@ -147,6 +147,30 @@ module.exports = {
         type: 'string'
       }
     ],
+    sample: {
+      "id": 5014,
+      "ticket": 123,
+      "person": 1,
+      "email_source": null,
+      "attributes": [],
+      "attachments": [],
+      "date_created": "2021-04-16T08:50:14+0000",
+      "is_agent_note": 0,
+      "creation_system": "web",
+      "ip_address": "",
+      "visitor_id": null,
+      "hostname": "",
+      "geo_country": null,
+      "email": "",
+      "message_hash": "f2fb1570bc583d6aee85be67d1d506af9b9cd55a",
+      "primary_translation": null,
+      "message": "Test message",
+      "message_full": "",
+      "message_raw": null,
+      "message_preview_text": "Test message",
+      "show_full_hint": false,
+      "lang_code": null
+    },
 
     perform: createAddnotetoticket
   }

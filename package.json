@@ -13,7 +13,7 @@
   "dependencies": {
     "google-libphonenumber": "^3.0.10",
     "lodash": "^4.17.10",
-    "zapier-platform-core": "8.0.1"
+    "zapier-platform-core": "10.2.0"
   },
   "devDependencies": {
     "babel": "6.23.0",

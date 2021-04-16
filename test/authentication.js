@@ -24,5 +24,5 @@ describe('Authentication', () => {
         done();
       })
       .catch(done);
-  });
+  }).timeout(5000);
 });

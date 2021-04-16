@@ -9,7 +9,7 @@ const appTester = zapier.createAppTester(App);
 describe('Triggers', () => {
   before(testUtils.globalBeforeSetup);
 
-  it('should test auth', (done) => {
+  it('should pull new ticket', (done) => {
     const bundle = {
       authData: {
         platform_url: process.env.PLATFORM_URL,
@@ -24,5 +24,5 @@ describe('Triggers', () => {
         done();
       })
       .catch(done);
-  });
+  }).timeout(5000);
 });
